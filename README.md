@@ -19,7 +19,7 @@
 | Total Referred | 142,820 |
 | Pass Percentage | 73.03% |
 | Refer Percentage | 56.62% |
-| Last Result Published | 21 January 2026, 21:49 UTC |
+| Last Result Published | 22 January 2026, 03:49 AM BST |
 <!-- STATS:END -->
 
 ---
@@ -57,6 +57,18 @@ Returns aggregated public statistics.
 <!-- CHART:START -->
 ![BTEB Live Stats Graph](chart.svg)
 <!-- CHART:END -->
+
+---
+
+## 🕐 Last Updated
+
+<!-- UPDATED:START -->
+| Field | Value |
+|-------|-------|
+| Last Auto-Update | 04 March 2026, 06:00 AM BST |
+| Update Frequency | Every 30 minutes |
+| Timezone | Asia/Dhaka (BST, UTC+6) |
+<!-- UPDATED:END -->
 
 ---
 
