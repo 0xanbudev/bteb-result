@@ -9,6 +9,7 @@
 
 ## 📊 Live Public Stats (Auto Updated Every 30 Minutes)
 
+<!-- STATS:START -->
 | Metric | Value |
 |--------|--------|
 | Database Connected | Yes |
@@ -19,11 +20,13 @@
 | Pass Percentage | 73.03% |
 | Refer Percentage | 56.62% |
 | Last Result Published | 21 January 2026, 21:49 UTC |
+<!-- STATS:END -->
 
 ---
 
 ## 🔌 Public API Endpoints
 
+<!-- API:START -->
 ### GET /api/stats/public
 
 Returns aggregated public statistics.
@@ -45,12 +48,15 @@ Returns aggregated public statistics.
   }
 }
 ```
+<!-- API:END -->
 
 ---
 
 ## 📈 Live Stats Graph
 
+<!-- CHART:START -->
 ![BTEB Live Stats Graph](chart.svg)
+<!-- CHART:END -->
 
 ---
 
