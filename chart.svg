@@ -1,54 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="700" height="340" viewBox="0 0 700 340">
   <rect width="700" height="340" fill="#0d1117" rx="12"/>
-
-  <!-- Title -->
   <text x="350" y="32" text-anchor="middle" fill="#e6edf3" font-family="'Segoe UI',Arial,sans-serif" font-size="15" font-weight="bold">BTEB Public Stats</text>
-  <text x="350" y="50" text-anchor="middle" fill="#8b949e" font-family="'Segoe UI',Arial,sans-serif" font-size="11">Last updated: 04 March 2026</text>
-
-  <!-- Top divider -->
+  <text x="350" y="50" text-anchor="middle" fill="#8b949e" font-family="'Segoe UI',Arial,sans-serif" font-size="11">Last updated: 3 March 2026</text>
   <line x1="20" y1="62" x2="680" y2="62" stroke="#21262d" stroke-width="1"/>
-
-  <!-- Section labels -->
   <text x="185" y="82" text-anchor="middle" fill="#8b949e" font-family="'Segoe UI',Arial,sans-serif" font-size="11">Student Counts</text>
   <text x="535" y="82" text-anchor="middle" fill="#8b949e" font-family="'Segoe UI',Arial,sans-serif" font-size="11">Result Percentages</text>
-
-  <!-- Panel divider -->
   <line x1="375" y1="70" x2="375" y2="290" stroke="#21262d" stroke-width="1"/>
-
-  <!-- Baselines -->
   <line x1="35" y1="280" x2="355" y2="280" stroke="#30363d" stroke-width="1"/>
   <line x1="395" y1="280" x2="665" y2="280" stroke="#30363d" stroke-width="1"/>
-
-  <!-- LEFT PANEL — Count Bars -->
-
-  <!-- Students: 252,260 → max → height 200 -->
   <rect x="50" y="80" width="80" height="200" fill="#1f6feb" rx="4"/>
   <text x="90" y="74" text-anchor="middle" fill="#79c0ff" font-family="'Segoe UI',Arial,sans-serif" font-size="10" font-weight="bold">252,260</text>
   <text x="90" y="297" text-anchor="middle" fill="#8b949e" font-family="'Segoe UI',Arial,sans-serif" font-size="10">Students</text>
-
-  <!-- Passed: 184,224 → 184224/252260*200 ≈ 146.1 -->
-  <rect x="158" y="133" width="80" height="147" fill="#3fb950" rx="4"/>
-  <text x="198" y="127" text-anchor="middle" fill="#56d364" font-family="'Segoe UI',Arial,sans-serif" font-size="10" font-weight="bold">184,224</text>
+  <rect x="158" y="134" width="80" height="146" fill="#3fb950" rx="4"/>
+  <text x="198" y="128" text-anchor="middle" fill="#56d364" font-family="'Segoe UI',Arial,sans-serif" font-size="10" font-weight="bold">184,224</text>
   <text x="198" y="297" text-anchor="middle" fill="#8b949e" font-family="'Segoe UI',Arial,sans-serif" font-size="10">Passed</text>
-
-  <!-- Referred: 142,820 → 142820/252260*200 ≈ 113.3 -->
   <rect x="265" y="167" width="80" height="113" fill="#f85149" rx="4"/>
   <text x="305" y="161" text-anchor="middle" fill="#ff7b72" font-family="'Segoe UI',Arial,sans-serif" font-size="10" font-weight="bold">142,820</text>
   <text x="305" y="297" text-anchor="middle" fill="#8b949e" font-family="'Segoe UI',Arial,sans-serif" font-size="10">Referred</text>
-
-  <!-- RIGHT PANEL — Percentage Bars -->
-
-  <!-- Pass %: 73.03 → 73.03/100*200 ≈ 146.1 -->
   <rect x="418" y="134" width="90" height="146" fill="#3fb950" rx="4"/>
   <text x="463" y="128" text-anchor="middle" fill="#56d364" font-family="'Segoe UI',Arial,sans-serif" font-size="11" font-weight="bold">73.03%</text>
   <text x="463" y="297" text-anchor="middle" fill="#8b949e" font-family="'Segoe UI',Arial,sans-serif" font-size="10">Pass Rate</text>
-
-  <!-- Refer %: 56.62 → 56.62/100*200 ≈ 113.2 -->
   <rect x="548" y="167" width="90" height="113" fill="#d29922" rx="4"/>
   <text x="593" y="161" text-anchor="middle" fill="#e3b341" font-family="'Segoe UI',Arial,sans-serif" font-size="11" font-weight="bold">56.62%</text>
   <text x="593" y="297" text-anchor="middle" fill="#8b949e" font-family="'Segoe UI',Arial,sans-serif" font-size="10">Refer Rate</text>
-
-  <!-- Footer bar -->
   <rect x="20" y="310" width="660" height="22" fill="#161b22" rx="4"/>
   <text x="350" y="325" text-anchor="middle" fill="#8b949e" font-family="'Segoe UI',Arial,sans-serif" font-size="10">Institutes: 525 · DB: Connected ✓ · Auto-updated every 30 min · bteb.anbuinfosec.dev</text>
 </svg>
