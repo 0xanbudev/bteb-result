@@ -9,8 +9,10 @@ import json
 import re
 import urllib.request
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 API_URL = "https://bteb.anbuinfosec.dev/api/stats/public"
+DHAKA_TZ = ZoneInfo("Asia/Dhaka")
 
 
 def fetch_data() -> dict:
@@ -24,7 +26,8 @@ def fmt_num(n: int) -> str:
 
 def fmt_date(iso: str) -> str:
     dt = datetime.fromisoformat(iso.replace("Z", "+00:00"))
-    return dt.strftime("%-d %B %Y, %H:%M UTC")
+    dt_dhaka = dt.astimezone(DHAKA_TZ)
+    return dt_dhaka.strftime("%-d %B %Y, %-I:%M %p BST")
 
 
 def build_table(d: dict) -> str:
@@ -86,7 +89,7 @@ def build_svg(d: dict) -> str:
     pp_y, pp_h = bar(d["passPercentage"], 100)
     rp_y, rp_h = bar(d["refPercentage"], 100)
 
-    today = datetime.now(timezone.utc).strftime("%-d %B %Y")
+    today = datetime.now(DHAKA_TZ).strftime("%-d %B %Y")
 
     s_label  = fmt_num(d["studentCount"])
     p_label  = fmt_num(d["passCount"])
