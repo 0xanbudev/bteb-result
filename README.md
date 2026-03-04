@@ -65,7 +65,7 @@ Returns aggregated public statistics.
 <!-- UPDATED:START -->
 | Field | Value |
 |-------|-------|
-| Last Auto-Update | 4 March 2026, 03:36 PM BST |
+| Last Auto-Update | 4 March 2026, 04:32 PM BST |
 | Update Frequency | Every 30 minutes |
 | Timezone | Asia/Dhaka (BST, UTC+6) |
 <!-- UPDATED:END -->
