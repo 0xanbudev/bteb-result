@@ -2,12 +2,12 @@
 
 > bteb.anbuinfosec.dev public stats updater.
 
-[![Auto Update](https://img.shields.io/badge/Auto%20Update-Every%2030%20mins-blue)](https://bteb.anbuinfosec.dev)
+[![Auto Update](https://img.shields.io/badge/Auto%20Update-Every%2025%20Days-blue)](https://bteb.anbuinfosec.dev)
 [![API Status](https://img.shields.io/badge/API-Live-brightgreen)](https://bteb.anbuinfosec.dev/api/stats/public)
 
 ---
 
-## 📊 Live Public Stats (Auto Updated Every 30 Minutes)
+## 📊 Live Public Stats (Auto Updated Every 25 Days)
 
 <!-- STATS:START -->
 | Metric | Value |
@@ -66,7 +66,7 @@ Returns aggregated public statistics.
 | Field | Value |
 |-------|-------|
 | Last Auto-Update | 4 March 2026, 09:36 PM BST |
-| Update Frequency | Every 30 minutes |
+| Update Frequency | Every 25 days |
 | Timezone | Asia/Dhaka (BST, UTC+6) |
 <!-- UPDATED:END -->
 
