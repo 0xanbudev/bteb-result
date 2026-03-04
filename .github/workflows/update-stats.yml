@@ -2,8 +2,8 @@ name: Update BTEB Stats
 
 on:
   schedule:
-    # Runs every 30 minutes
-    - cron: '*/30 * * * *'
+    # Runs every 25 days (on the 1st and 26th of each month at 00:00 UTC)
+    - cron: '0 0 */25 * *'
   workflow_dispatch:
 
 permissions:
