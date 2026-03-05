@@ -1,0 +1,28 @@
+name: Uptime Monitor Cron
+
+on:
+  schedule:
+    # Runs every minute — GitHub Actions minimum is 1 minute
+    - cron: '* * * * *'
+  workflow_dispatch: # Allow manual trigger from the Actions tab
+
+jobs:
+  check-monitors:
+    name: Run due monitor checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Ping cron endpoint
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" \
+            https://uptime.anbuinfosec.dev/api/cron/check-monitors)
+
+          echo "HTTP status: $response"
+
+          if [ "$response" != "200" ]; then
+            echo "❌ Cron endpoint returned $response"
+            exit 1
+          fi
+
+          echo "✅ Monitor checks triggered successfully"
