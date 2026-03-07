@@ -1,4 +1,4 @@
-name: ROKTODAN API Monitor [CHECKED]
+name: API Monitor [CHECKED]
 
 on:
   schedule:
@@ -11,29 +11,37 @@ permissions:
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check API status
+      - name: Check API
+        id: api
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://www.roktodan.xyz/api/teams/members)
+          STATUS=$(curl -s https://www.roktodan.xyz/api/teams/members | jq -r '.success')
 
-          if [ "$STATUS" = "200" ]; then
+          if [ "$STATUS" = "true" ]; then
             echo "STATUS=UP" >> $GITHUB_ENV
-            echo "$(date) - API UP" >> log.txt
+            echo "$(date -u) - API UP" >> log.txt
           else
             echo "STATUS=DOWN" >> $GITHUB_ENV
-            echo "$(date) - API DOWN (HTTP $STATUS)" >> log.txt
+            echo "$(date -u) - API DOWN" >> log.txt
           fi
 
       - name: Update workflow name
         run: |
-          if [ "$STATUS" = "UP" ]; then
-            sed -i '1s/.*/name: API Monitor [UP]/' .github/workflows/raktodan.yml
+          FILE=".github/workflows/raktodan.yml"
+
+          if [ -f "$FILE" ]; then
+            if [ "$STATUS" = "UP" ]; then
+              sed -i '1s/.*/name: API Monitor [UP]/' "$FILE"
+            else
+              sed -i '1s/.*/name: API Monitor [DOWN]/' "$FILE"
+            fi
           else
-            sed -i '1s/.*/name: API Monitor [DOWN]/' .github/workflows/raktodan.yml
+            echo "Workflow file not found"
           fi
 
       - name: Commit changes
@@ -44,8 +52,8 @@ jobs:
           git add log.txt .github/workflows/raktodan.yml
 
           if git diff --cached --quiet; then
-            echo "No changes"
+            echo "No changes detected"
           else
-            git commit -m "chore: api monitor update [skip ci]"
+            git commit -m "chore: API monitor update [skip ci]"
             git push
           fi
