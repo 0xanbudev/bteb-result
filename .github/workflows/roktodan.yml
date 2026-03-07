@@ -11,37 +11,39 @@ permissions:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Check API
-        id: api
         run: |
-          STATUS=$(curl -s https://www.roktodan.xyz/api/teams/members | jq -r '.success')
+          RESPONSE=$(curl -s -w "%{http_code}" -o api.json https://www.roktodan.xyz/api/teams/members)
+          CODE=$RESPONSE
 
-          if [ "$STATUS" = "true" ]; then
-            echo "STATUS=UP" >> $GITHUB_ENV
-            echo "$(date -u) - API UP" >> log.txt
+          if [ "$CODE" = "200" ]; then
+            SUCCESS=$(jq -r '.success // false' api.json 2>/dev/null || echo "false")
+
+            if [ "$SUCCESS" = "true" ]; then
+              echo "STATUS=UP" >> $GITHUB_ENV
+              echo "$(date -u) - API UP" >> log.txt
+            else
+              echo "STATUS=DOWN" >> $GITHUB_ENV
+              echo "$(date -u) - API DOWN (invalid JSON)" >> log.txt
+            fi
           else
             echo "STATUS=DOWN" >> $GITHUB_ENV
-            echo "$(date -u) - API DOWN" >> log.txt
+            echo "$(date -u) - API DOWN (HTTP $CODE)" >> log.txt
           fi
 
       - name: Update workflow name
         run: |
           FILE=".github/workflows/raktodan.yml"
 
-          if [ -f "$FILE" ]; then
-            if [ "$STATUS" = "UP" ]; then
-              sed -i '1s/.*/name: API Monitor [UP]/' "$FILE"
-            else
-              sed -i '1s/.*/name: API Monitor [DOWN]/' "$FILE"
-            fi
+          if [ "$STATUS" = "UP" ]; then
+            sed -i '1s/.*/name: API Monitor [UP]/' $FILE
           else
-            echo "Workflow file not found"
+            sed -i '1s/.*/name: API Monitor [DOWN]/' $FILE
           fi
 
       - name: Commit changes
@@ -52,8 +54,8 @@ jobs:
           git add log.txt .github/workflows/raktodan.yml
 
           if git diff --cached --quiet; then
-            echo "No changes detected"
+            echo "No changes"
           else
-            git commit -m "chore: API monitor update [skip ci]"
+            git commit -m "chore: api monitor update [skip ci]"
             git push
           fi
