@@ -1,45 +1,36 @@
-import asyncio
-from datetime import datetime, timezone
-import aiohttp
+import requests
 
-URL = "https://www.roktodan.xyz/api/teams/members"
+headers = {
+    'accept': '*/*',
+    'accept-language': 'en-US,en;q=0.9',
+    'priority': 'u=1, i',
+    'referer': 'https://www.roktodan.xyz/teams',
+    'sec-ch-ua': '"Not:A-Brand";v="99", "Google Chrome";v="145", "Chromium";v="145"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"macOS"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
+}
 
-async def check_api():
-    async with aiohttp.ClientSession() as session:
-        async with session.get(
-            URL,
-            headers={
-                "User-Agent": "Mozilla/5.0",
-                "Accept": "*/*",
-                "Referer": "https://www.roktodan.xyz/teams"
-            }
-        ) as resp:
-            status = resp.status
-            data = await resp.json(content_type=None)
-            return status, data
+response = requests.get('https://www.roktodan.xyz/api/teams/members', headers=headers)
 
-
-async def main():
-    try:
-        status, data = await check_api()
-    except Exception:
-        status, data = None, {}
-
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-
-    if status == 200 and data.get("success") is True:
-        msg = f"{now} - API UP (HTTP {status})"
+if response.status_code == 200:
+    data = response.json()
+    status = data.get('success')
+    if status:
+        print("API request was successful.")
+        # save log
+        with open('roktodan_log.txt', 'a') as log_file:
+            log_file.write(f"API request successful: 200\n")
     else:
-        msg = f"{now} - API DOWN (HTTP {status})"
-
-    print(msg)
-
-    with open("log.txt", "a") as f:
-        f.write(msg + "\n")
-
-
-try:
-    loop = asyncio.get_running_loop()
-    loop.create_task(main())
-except RuntimeError:
-    asyncio.run(main())
+        print(f"API returned an error: {data.get('message')}")
+        # save error log 
+        with open('roktodan_log.txt', 'a') as log_file:
+            log_file.write(f"API error: {data.get('message')}\n")
+else:
+    print(f"Failed to fetch data. Status code: {response.status_code}")
+    # save error log
+    with open('roktodan_log.txt', 'a') as log_file:
+        log_file.write(f"HTTP error: Status code {response.status_code}\n")
