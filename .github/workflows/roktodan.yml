@@ -1,4 +1,4 @@
-name: API Monitor [CHECKED]
+name: API Monitor
 
 on:
   schedule:
@@ -11,9 +11,10 @@ permissions:
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Check API
@@ -25,37 +26,24 @@ jobs:
             SUCCESS=$(jq -r '.success // false' api.json 2>/dev/null || echo "false")
 
             if [ "$SUCCESS" = "true" ]; then
-              echo "STATUS=UP" >> $GITHUB_ENV
               echo "$(date -u) - API UP" >> log.txt
             else
-              echo "STATUS=DOWN" >> $GITHUB_ENV
-              echo "$(date -u) - API DOWN (invalid JSON)" >> log.txt
+              echo "$(date -u) - API DOWN (invalid response)" >> log.txt
             fi
           else
-            echo "STATUS=DOWN" >> $GITHUB_ENV
             echo "$(date -u) - API DOWN (HTTP $CODE)" >> log.txt
           fi
 
-      - name: Update workflow name
-        run: |
-          FILE=".github/workflows/raktodan.yml"
-
-          if [ "$STATUS" = "UP" ]; then
-            sed -i '1s/.*/name: API Monitor [UP]/' $FILE
-          else
-            sed -i '1s/.*/name: API Monitor [DOWN]/' $FILE
-          fi
-
-      - name: Commit changes
+      - name: Commit log
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add log.txt .github/workflows/raktodan.yml
+          git add log.txt
 
           if git diff --cached --quiet; then
-            echo "No changes"
+            echo "No changes detected"
           else
-            git commit -m "chore: api monitor update [skip ci]"
+            git commit -m "chore: API monitor log [skip ci]"
             git push
           fi
