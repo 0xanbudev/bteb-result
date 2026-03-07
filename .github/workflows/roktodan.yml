@@ -17,21 +17,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check API
+      - name: Check API with retry
         run: |
-          RESPONSE=$(curl -s -w "%{http_code}" -o api.json https://www.roktodan.xyz/api/teams/members)
-          CODE=$RESPONSE
+          URL="https://www.roktodan.xyz/api/teams/members"
+          SUCCESS="false"
 
-          if [ "$CODE" = "200" ]; then
-            SUCCESS=$(jq -r '.success // false' api.json 2>/dev/null || echo "false")
+          for i in 1 2 3; do
+            echo "Attempt $i..."
+            RESPONSE=$(curl -s -w "%{http_code}" -o api.json "$URL")
 
-            if [ "$SUCCESS" = "true" ]; then
-              echo "$(date -u) - API UP" >> log.txt
-            else
-              echo "$(date -u) - API DOWN (invalid response)" >> log.txt
+            if [ "$RESPONSE" = "200" ]; then
+              SUCCESS=$(jq -r '.success // false' api.json 2>/dev/null || echo "false")
+              if [ "$SUCCESS" = "true" ]; then
+                break
+              fi
             fi
+
+            sleep 5
+          done
+
+          if [ "$SUCCESS" = "true" ]; then
+            echo "$(date -u) - API UP" >> log.txt
           else
-            echo "$(date -u) - API DOWN (HTTP $CODE)" >> log.txt
+            echo "$(date -u) - API DOWN" >> log.txt
           fi
 
       - name: Commit log
@@ -42,8 +50,8 @@ jobs:
           git add log.txt
 
           if git diff --cached --quiet; then
-            echo "No changes detected"
+            echo "No changes"
           else
-            git commit -m "chore: API monitor log [skip ci]"
+            git commit -m "chore: api monitor log [skip ci]"
             git push
           fi
