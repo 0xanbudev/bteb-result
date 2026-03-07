@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install aiohttp
+          pip install requests
 
       - name: Run API monitor script
         run: |
@@ -35,7 +35,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add log.txt || true
+          git add roktodan_log.txt || true
 
           if git diff --cached --quiet; then
             echo "No changes detected"
