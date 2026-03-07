@@ -11,47 +11,35 @@ permissions:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Check API with retry
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
         run: |
-          URL="https://www.roktodan.xyz/api/teams/members"
-          SUCCESS="false"
+          pip install aiohttp
 
-          for i in 1 2 3; do
-            echo "Attempt $i..."
-            RESPONSE=$(curl -s -w "%{http_code}" -o api.json "$URL")
-
-            if [ "$RESPONSE" = "200" ]; then
-              SUCCESS=$(jq -r '.success // false' api.json 2>/dev/null || echo "false")
-              if [ "$SUCCESS" = "true" ]; then
-                break
-              fi
-            fi
-
-            sleep 5
-          done
-
-          if [ "$SUCCESS" = "true" ]; then
-            echo "$(date -u) - API UP" >> log.txt
-          else
-            echo "$(date -u) - API DOWN" >> log.txt
-          fi
+      - name: Run API monitor script
+        run: |
+          python .github/scripts/roktodan.py
 
       - name: Commit log
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add log.txt
+          git add log.txt || true
 
           if git diff --cached --quiet; then
-            echo "No changes"
+            echo "No changes detected"
           else
-            git commit -m "chore: api monitor log [skip ci]"
+            git commit -m "chore: update API monitor log [skip ci]"
             git push
           fi
