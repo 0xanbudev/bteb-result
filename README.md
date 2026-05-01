@@ -13,13 +13,13 @@
 | Metric | Value |
 |--------|--------|
 | Database Connected | Yes |
-| Total Students | 252,260 |
-| Total Institutes | 525 |
-| Total Passed | 184,224 |
-| Total Referred | 142,820 |
-| Pass Percentage | 73.03% |
-| Refer Percentage | 56.62% |
-| Last Result Published | 22 January 2026, 03:49 AM BST |
+| Total Students | 300,802 |
+| Total Institutes | 533 |
+| Total Passed | 201,022 |
+| Total Referred | 185,130 |
+| Pass Percentage | 66.83% |
+| Refer Percentage | 61.55% |
+| Last Result Published | 28 April 2026, 09:14 PM BST |
 <!-- STATS:END -->
 
 ---
@@ -38,13 +38,13 @@ Returns aggregated public statistics.
   "success": true,
   "data": {
     "connected": true,
-    "studentCount": 252260,
-    "instituteCount": 525,
-    "passCount": 184224,
-    "refCount": 142820,
-    "passPercentage": 73.03,
-    "refPercentage": 56.62,
-    "lastResultPublished": "2026-01-21T21:49:14.325Z"
+    "studentCount": 300802,
+    "instituteCount": 533,
+    "passCount": 201022,
+    "refCount": 185130,
+    "passPercentage": 66.83,
+    "refPercentage": 61.55,
+    "lastResultPublished": "2026-04-28T15:14:26.721Z"
   }
 }
 ```
@@ -65,7 +65,7 @@ Returns aggregated public statistics.
 <!-- UPDATED:START -->
 | Field | Value |
 |-------|-------|
-| Last Auto-Update | 26 April 2026, 07:50 AM BST |
+| Last Auto-Update | 1 May 2026, 08:05 AM BST |
 | Update Frequency | Every 30 minutes |
 | Timezone | Asia/Dhaka (BST, UTC+6) |
 <!-- UPDATED:END -->
